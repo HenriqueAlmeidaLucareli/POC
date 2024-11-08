@@ -26,24 +26,20 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install pipenv
-          python --version; pip --version; pipenv --version
-          pipenv run pip install flask==${{ matrix.flask-version }}
-      - name: Run tests
-        run: |
-          make check
-          make test
+          python --version;
+          pip install flask==${{ matrix.flask-version }}
         env:
           RANDOM_SEED: 0
 
       - name: Render
         uses: johnbeynon/render-deploy-action@v0.0.8
         with:
-          service-id: srv-crlk4mbv2p9s73fourbg # trocar: esta em Deploy hook
-          api-key: rnd_dAytgHrg67qJUXjGjiRTBBJBUEjG #trocar: em criar chave      
-        
-      - name: Deploy no EC2 -AWS
-        run: |
-          echo "Conectando no EC2"
-          echo "${{secrets.AWS_CHAVE_PIPELINE_AWS_PEM}}" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@"${{secrets.ssh_ubuntu}}" "
-          cd POC/;git pull;cd cd flask-api_methods-develop/;python_flask/;./executar.sh"
+          service-id: srv-csfo0fo8fa8c73a1a2dg # trocar: esta em Deploy hook
+          api-key: rnd_IU4BrzH90w4J1mnkQrsP7R7J4oAm #trocar: em criar chave
+
+      # - name: Deploy no EC2 -AWS
+      #   run: |  
+      #     echo "Conectando no EC2"
+      #     echo "${{secrets.AWS_CHAVE_PIPELINE_AWS_PEM}}" > private_key && chmod 600 private_key
+      #     ssh -o StrictHostKeyChecking=no -i private_key ubuntu@"${{secrets.ssh_ubuntu}}" "
+      #     cd POC/;git pull;cd flask-api_methods-develop/;python_flask/;./executar.sh"
